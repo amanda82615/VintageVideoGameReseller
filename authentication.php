@@ -6,7 +6,7 @@
 	$server = "localhost";
 	$sqlUsername = "group9";
 	$sqlPassword = "group9password";
-	$databaseName = "vvrg";
+	$databaseName = "vvgr";
 
         $conn = new mysqli($server, $sqlUsername, $sqlPassword, $databaseName);
 
