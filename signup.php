@@ -7,7 +7,7 @@
 	session_start();
 	$errorMessage = 'Create a user account';
 
-	//are user ID and Password provided?
+	//are username and Password provided?
 	if (isset($_POST['UserName']) && isset($_POST['Password']) &&
 		isset($_POST['retxtPassword'])) {
 
@@ -27,7 +27,7 @@
 		//table to store username and password
 		$userTable = "USER";
 
-		$ps = md5($loginPassword);
+		$ps = $loginPassword;
 
 		//table for user profile
 		$userTable = "USER";
@@ -60,12 +60,12 @@
 		<form action="" method="post" name="frmLogin" id="frmLogin">
 		 <table width="300" border="1" align="center" cellpadding="2" cellspacing="2">
 		  <tr>
-		   <td width="150">Select User ID *</td>
-		   <td><input name="txtUserId" type="text" id="txtUserId"></td>
+		   <td width="150">Select Username *</td>
+		   <td><input name="UserName" type="text" id="UserName"></td>
 		  </tr>
 		  <tr>
 		   <td width="150">Type Password *</td>
-		   <td><input name="txtPassword" type="password" id="txtPassword"></td>
+		   <td><input name="Password" type="password" id="Password"></td>
 		  </tr>
 		  <tr>
 		   <td width="150">Retype Password *</td>
@@ -75,18 +75,18 @@
 
 		  <tr>
 		   <td width="150">First Name</td>
-		   <td><input name="firstName" type="text" id="firstName"></td>
+		   <td><input name="FirstName" type="text" id="FirstName"></td>
 		  </tr>
 		  <tr>
 
 		  <tr>
 		   <td width="150">Last Name</td>
-		   <td><input name="lastName" type="text" id="lastName"></td>
+		   <td><input name="LastName" type="text" id="LastName"></td>
 		  </tr>
 		  <tr>
 		  <tr>
 		   <td width="150">Email Address</td>
-		   <td><input name="email" type="text" id="email"></td>
+		   <td><input name="Email" type="text" id="Email"></td>
 		  </tr>
 		  <tr>
 		   <td width="150">&nbsp;</td>

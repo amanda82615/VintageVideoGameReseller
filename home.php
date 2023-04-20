@@ -9,7 +9,7 @@
 		exit;
 	} else {
 		//logged in, display appropriate information
-		 echo "Hello ",$_SESSION['UserId'], "!";
+		 echo "Hello ",$_SESSION['UserName'], "!";
 	}
 ?>
 

@@ -8,22 +8,22 @@
 	$errorMessage = '';
 
 	//are user ID and Password provided?
-	if (isset($_POST['UserId']) && isset($_POST['Password'])) {
+	if (isset($_POST['UserName']) && isset($_POST['Password'])) {
 
 		//get userID and Password
-		$loginUserId = $_POST['UserId'];
+		$loginUserName = $_POST['UserName'];
 		$loginPassword = $_POST['Password'];
 
 		//connect to the database
     $connection = new mysqli($server, $sqlUsername, $sqlPassword, $databaseName);
 
 		// Authenticate the user
-		if (authenticateUser($connection, $loginUserId, $loginPassword))
+		if (authenticateUser($connection, $loginUserName, $loginPassword))
 		{
 			//the user id and password match,
 			// set the session
 			$_SESSION['db_is_logged_in'] = true;
-			$_SESSION['UserId'] = $loginUserId;
+			$_SESSION['UserName'] = $loginUserName;
 
 			// after login we move to the main page
 			header('Location: home.php');
@@ -46,12 +46,12 @@
 		<form action="" method="post" name="frmLogin" id="frmLogin">
 			 <table width="400" border="1" align="center" cellpadding="2" cellspacing="2">
 				  <tr>
-					<td width="150">User ID</td>
-					<td><input name="txtUserId" type="text" id="txtUserId"></td>
+					<td width="150">Username</td>
+					<td><input name="UserName" type="text" id="UserName"></td>
 				  </tr>
 				  <tr>
 					<td width="150">Password</td>
-					<td><input name="txtPassword" type="password" id="txtPassword"></td>
+					<td><input name="Password" type="password" id="Password"></td>
 				  </tr>
 				  <tr>
 					<td width="150">&nbsp;</td>

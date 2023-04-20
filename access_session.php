@@ -2,5 +2,5 @@
     session_start();
 
     echo "Access session variable<br>";
-    echo $_SESSION['userID'];
+    echo $_SESSION['UserId'];
 ?>

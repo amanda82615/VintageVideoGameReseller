@@ -16,7 +16,7 @@
 	{
 	  // User table which stores userid and password
 	  // Change to your own table name
-	  $userTable = "userprofile";
+	  $userTable = "USER";
 
 	  // Test the username and password parameters
 	  if (!isset($username) || !isset($password))
@@ -26,7 +26,7 @@
 	  // Formulate the SQL statment to find the user
 	  $sql = "SELECT *
 		 FROM $userTable
-		 WHERE userid = '$username' AND password = '$pa'";
+		 WHERE UserName = '$username' AND Password = '$password'";
 	  echo $sql;
 
 	  // Execute the query
