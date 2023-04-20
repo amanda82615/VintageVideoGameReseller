@@ -26,7 +26,7 @@
 			$_SESSION['UserId'] = $loginUserId;
 
 			// after login we move to the main page
-			header('Location: main.php');
+			header('Location: home.php');
 			exit;
 		} else {
 			$errorMessage = 'Sorry, wrong username / password';
