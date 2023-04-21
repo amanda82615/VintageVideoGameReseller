@@ -83,32 +83,65 @@
         <div class="main">
             <h2>Vintage Video Game Reseller</h2>
             <h3>Browse By Category</h3>
+			<form action="search.php" method="post">
                 <div class="row">
                     <div class="column">
-                        <a href="games">Games</a>
+					<input type="submit" name = "category" value="Games">
                     </div>
                     <div class="column">
-                        <a href="consoles">Consoles</a>
+                    <input type="submit" name = "category" value="Consoles">
                     </div>
                     <div class="column">
-                        <a href="accessories">Accessories</a>
+					<input type="submit" name = "category" value="Accessories">
                     </div>
                 </div>
             <h3>Browse By Brand</h3>
                 <div class="row">
                     <div class="column">
-                        <a href="nintendo">Nintendo</a>
+                    <input type="submit" name = "description" value="Nintendo">
                     </div>
                     <div class="column">
-                        <a href="atari">Atari</a>
+                    <input type="submit" name = "description" value="Atari">
                     </div>
                     <div class="column">
-                        <a href="sega">Sega</a>
+                    <input type="submit" name = "description" value="Sega">
                     </div>
                 </div>
+				</form>
             <h3>Recent Listings</h3>
-                <div class="row"; style="width: auto; height: 100px; background-color: #d1d1d1;" ></div>
-        </div>
+                <div class="row"; style="width: auto; height: 325px; background-color: #d1d1d1;" >
+				<?php
+					$server = "localhost";
+					$sqlUsername = "group9";
+					$sqlPassword = "group9password";
+					$databaseName = "vvgr";
+					$conn = new mysqli($server, $sqlUsername, $sqlPassword, $databaseName);
+					if ($conn->connect_error) {
+						die("Connection failed: " . $conn->connect_error);
+					}
+					echo "<table class=\"table2\">";
+					echo "<tr>";
+					$sql = "SELECT ItemName, Category, State, Price, Status FROM ITEM WHERE Status = 'Available' ORDER BY ItemId DESC LIMIT 10";
+					$result = $conn->query($sql);
+					while ($fieldMetadata = $result->fetch_field() ) {
+						echo "<th>".$fieldMetadata->name."</th>";
+					}
+					echo "</tr>";
+					// fetch rows in the table
+					while( $row = $result->fetch_assoc() ) {
+						echo "<tr>\n";
+						foreach ($row as $cell) {
+							echo "<td> $cell </td>";
+						}
+						echo "</tr>\n";
+					}
+					echo "</table>";
+					$results->free();	
+					$conn->close();
+
+				?>
+				</div>
+			</div>
 
     </body>
 </html>
