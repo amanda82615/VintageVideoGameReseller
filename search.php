@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <title>Search</title>
+    <title>Items for sale</title>
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
@@ -50,25 +50,41 @@
                 border-radius: 25px;
                 overflow: auto;
             }
-            .column {
+            .filterDiv {
                 float: left;
-                width: 30%;
-                padding: 10px;
-                height: 300px;
-                margin: 5px;
-                background-color: #d1d1d1;
+                background-color: #2196F3;
+                color: #ffffff;
+                width: 100px;
+                line-height: 100px;
+                text-align: center;
+                margin: 2px;
+                display: none;
             }
-            .column a{
-               text-decoration: none;
-               color: #000000; 
+            .show {
+                display: block;
             }
-            .column a:hover {
-                color: #0D00FF;
+
+            .container {
+                margin-top: 20px;
+                overflow: hidden;
             }
-            .row:after {
-                content: "";
-                display: table;
-                clear: both;
+
+                /* Style the buttons */
+            .btn {
+                border: none;
+                outline: none;
+                padding: 12px 16px;
+                background-color: #f1f1f1;
+                cursor: pointer;
+            }
+
+            .btn:hover {
+                background-color: #ddd;
+            }
+
+            .btn.active {
+                background-color: #808080;
+                color: white;
             }
             .button1 {
                 border: none;
@@ -98,27 +114,30 @@
     </head>
     <body>
         <div class="sidenav">
-            <p style="color:white; font-size:30px; padding: 6px 8px 6px 16px;">Welcome!</p>
+        <p style="color:white; font-size:30px; padding: 6px 8px 6px 16px; text-align: center;">Buy something new to you!</p>
             <a href="home.php">Home</a> <br>
-            <a href="search.php">Search</a> <br>
-            <a href="profile.php">My Account</a>
+            <a href="search.php">Buy</a> <br>
+            <a href="create_listing.php">Sell</a> <br>
+            <a href="profile.php">Account</a>
         </div>
         
         <div class="main">
-            <h2>Vintage Video Game Reseller</h2>
-            <h3>Search for listings</h3>
+        <h2>Vintage Video Game Reseller</h2>
+            <!--put user code here****
+                <p style="font-size: 18px; text-align:right;">vintage_gamer</p>-->
+            <p>Search through all listings</p>
             <h4>By Name:</h4>
             <div class="row">
             <form action="search.php" style="margin:left;max-width:500px" method="post">
                 <input type="text" class = "search" placeholder="Search..." name="name">
-                <input type= "submit" class="button1" value="Submit"></button>
+                <button type="submit"><img src="Images/searchicon.png" alt="search icon" style="width:20px"></button>
             </form>
         </div>
             <br>
             <h4>By Seller:</h4>
             <form action="search.php" style="margin:left;max-width:500px" method="post">
                 <input type="text" class = "search" placeholder="Search..." name="seller">
-                <input type= "submit" class="button1" value="Submit"></button>
+                <button type="submit"><img src="Images/searchicon.png" alt="search icon" style="width:20px"></button>
             </form>
 
                 
