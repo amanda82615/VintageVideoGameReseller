@@ -13,7 +13,7 @@ CREATE TABLE ITEM (
   ItemId Int NOT NULL AUTO_INCREMENT,
   SellerId Int NOT NULL,
   ItemName VarChar(70) NOT NULL,
-  Description VarChar(100) NULL,
+  Brand VarChar(50) NULL,
   Category VarChar(25) NOT NULL DEFAULT 'Other',
   State VarChar(25) NOT NULL,
   Price Decimal(10, 2) NOT NULL,
