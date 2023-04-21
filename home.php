@@ -54,7 +54,7 @@
                 float: left;
                 width: 30%;
                 padding: 10px;
-                height: 300px;
+                height: 150px;
                 margin: 5px;
                 background-color: #d1d1d1;
             }
@@ -70,14 +70,27 @@
                 display: table;
                 clear: both;
             }
+			.button1 {
+                border: none;
+                color: white;
+                background-color: #62a8b0;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+            }
         </style>
     </head>
     <body>
         <div class="sidenav">
             <p style="color:white; font-size:30px; padding: 6px 8px 6px 16px;">Welcome!</p>
             <a href="home.php">Home</a> <br>
-            <a href="search.php">Search</a> <br>
-            <a href="profile.php">My Account</a>
+            <a href="search.php">Buy</a> <br>
+            <a href="create_listing.php">Sell</a> <br>
+            <a href="profile.php">Account</a>
         </div>
         
         <div class="main">
@@ -86,25 +99,31 @@
 			<form action="search.php" method="post">
                 <div class="row">
                     <div class="column">
-					<input type="submit" name = "category" value="Games">
+					<input type="submit" class= "button1" name = "category" value="Games">
+					<img src="Images/gamesicon.png" alt="game icon" style="width:100px">
                     </div>
                     <div class="column">
-                    <input type="submit" name = "category" value="Consoles">
+                    <input type="submit" class= "button1" name = "category" value="Consoles">
+					<img src="Images/consoleicon.png" alt="consoles icon" style="width:100px">
                     </div>
                     <div class="column">
-					<input type="submit" name = "category" value="Accessories">
+					<input type="submit" class= "button1" name = "category" value="Accessories">
+					<img src="Images/accessoriesicon.png" alt="accessories icon" style="width:100px">
                     </div>
                 </div>
             <h3>Browse By Brand</h3>
                 <div class="row">
                     <div class="column">
-                    <input type="submit" name = "description" value="Nintendo">
+                    <input type="submit" class= "button1" name = "description" value="Nintendo">
+					<img src="Images/nintendoicon.png" alt="nintendo icon" style="width:150px">
                     </div>
                     <div class="column">
-                    <input type="submit" name = "description" value="Atari">
+                    <input type="submit" class= "button1" name = "description" value="Atari">
+					<img src="Images/atariicon.png" alt="atari icon" style="width:150px">
                     </div>
                     <div class="column">
-                    <input type="submit" name = "description" value="Sega">
+                    <input type="submit" class= "button1" name = "description" value="Sega">
+					<img src="Images/segaicon.png" alt="sega icon" style="width:150px">
                     </div>
                 </div>
 				</form>
