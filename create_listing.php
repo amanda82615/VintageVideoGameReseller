@@ -60,7 +60,7 @@
     <body>
         <div class="sidenav">
             <p style="color:white; font-size:30px; padding: 6px 8px 6px 16px; text-align: center;">Sell your items here</p>
-            <a href="vintage_video_game_seller.html">Home</a> <br>
+            <a href="home.php">Home</a> <br>
             <a href="search.php">Buy</a> <br>
             <a href="create_listing.php">Sell</a> <br>
             <a href="profile.php">Account</a>
