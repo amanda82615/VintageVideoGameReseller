@@ -91,7 +91,7 @@
                 color: white;
                 background-color: #62a8b0;
                 padding: 15px 32px;
-                text-align: center;
+                text-align: left;
                 text-decoration: none;
                 display: inline-block;
                 font-size: 16px;
@@ -100,8 +100,8 @@
             }
             .search {
                 border: 5px;
-                border-color: LightGray;
-                color: LightGray;
+                border-color: Black;
+                color: Black;
                 background-color: White;
                 padding: 15px 32px;
                 text-align: center;
@@ -122,28 +122,33 @@
         </div>
         
         <div class="main">
-        <h2>Vintage Video Game Reseller</h2>
-            <!--put user code here****
-                <p style="font-size: 18px; text-align:right;">vintage_gamer</p>-->
-            <p>Search through all listings</p>
-            <h4>By Name:</h4>
-            <div class="row">
-            <form action="search.php" style="margin:left;max-width:500px" method="post">
-                <input type="text" class = "search" placeholder="Search..." name="name">
-                <button type="submit"><img src="Images/searchicon.png" alt="search icon" style="width:20px"></button>
-            </form>
-        </div>
+            <h2>Vintage Video Game Reseller</h2>
+            <br><br>
+            <p><h3>Search through all listings here</h3></p>
             <br>
-            <h4>By Seller:</h4>
             <form action="search.php" style="margin:left;max-width:500px" method="post">
-                <input type="text" class = "search" placeholder="Search..." name="seller">
-                <button type="submit"><img src="Images/searchicon.png" alt="search icon" style="width:20px"></button>
+                <table>
+                    <tr>
+                        <td>Item Name</td>
+                        <td>Brand</td>
+                        <td>Category</td>
+                        <td>Condition</td>
+                        <td>Seller</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class = "search" placeholder="Search..." name="ItemName"></td>
+                        <td><input type="text" class = "search" placeholder="Search..." name="Brand"></td>
+                        <td><input type="text" class = "search" placeholder="Search..." name="Category"></td>
+                        <td><input type="text" class = "search" placeholder="Search..." name="Condition"></td>
+                        <td><input type="text" class = "search" placeholder="Search..." name="Seller"></td>
+                        <td><input type="submit" class= "button1" name= "Submit"></td>
+                    </tr>       
+            </table>
             </form>
+            <br><br><br>
 
-                
-            
-				</form>
-            <h3>Recent Listings</h3>
+        
+            <h3>Search Results:</h3>
                 <div class="row"; style="width: auto; height: 325px; background-color: #d1d1d1;" >
 				<?php
 					$server = "localhost";
@@ -154,9 +159,43 @@
 					if ($conn->connect_error) {
 						die("Connection failed: " . $conn->connect_error);
 					}
-					echo "<table class=\"table2\">";
+
+                    
+                    if (!empty($_POST['ItemName'])) {
+                        $itemname = $_POST['ItemName'];
+                    }
+                    else {
+                        $itemname = "";
+                    }
+                    if (!empty($_POST['Brand'])) {
+                        $brand = $_POST['Brand'];
+                    }
+                    else {
+                        $brand = "";
+                    }
+                    if (!empty($_POST['Category'])) {
+                        $category = $_POST['Category'];
+                    }
+                    else {
+                        $category = "";
+                    }
+                    if (!empty($_POST['Condition'])) {
+                        $condition = $_POST['Condition'];
+                    }
+                    else {
+                        $condition = "";
+                    }
+                    if (!empty($_POST['Seller'])) {
+                        $seller = $_POST['Seller'];
+                    }
+                    else {
+                        $seller = "";
+                    }
+                    $sql = "SELECT i.ItemName as 'Item Name', i.Brand, i.Category, i.State AS 'Condition', i.Price, i.Status, u.UserName AS 'Sold By' FROM ITEM AS i JOIN USER as u ON i.SellerId=u.UserId WHERE i.ItemName LIKE '%$itemname%' AND i.Brand LIKE '%$brand%' AND i.Category LIKE '%$category%' AND i.State LIKE '%$condition%' AND u.UserName LIKE '%$seller%' AND i.Status = 'Available'";
+
+                    // fetch table rows from mysql db
+                    echo "<table class=\"table2\">";
 					echo "<tr>";
-					$sql = "SELECT ItemName, Category, State, Price, Status FROM ITEM WHERE Status = 'Available' ORDER BY ItemId DESC LIMIT 10";
 					$result = $conn->query($sql);
 					while ($fieldMetadata = $result->fetch_field() ) {
 						echo "<th>".$fieldMetadata->name."</th>";
@@ -173,7 +212,6 @@
 					echo "</table>";
 					$results->free();	
 					$conn->close();
-
 				?>
 				</div>
 			</div>
