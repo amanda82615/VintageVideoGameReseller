@@ -126,6 +126,8 @@
 						}
 					}
 
+					
+
 					$sql = "SELECT i.ItemId, i.ItemName, i.Price, i.Status FROM ITEM as i, USER as u WHERE i.SellerId=u.UserId AND u.UserName='$uid'";
 					$query_result = $conn->query($sql);
 					if (!$query_result) {
@@ -182,10 +184,10 @@
 					<tr>
 					<td width="150">Category</td>
 					<td><select id="Category" name="Category">
-                        <option value="games">Games</option>
-                        <option value="consolses">Consoles</option>
-                        <option value="accessories">Accessories</option>
-                        <option value="other">Other</option>
+                        <option value="Games">Games</option>
+                        <option value="Consoles">Consoles</option>
+                        <option value="Accessories">Accessories</option>
+                        <option value="Other">Other</option>
                         </select></td>
 					</tr>
                     <tr>
@@ -207,7 +209,10 @@
 					</tr>
 				</table>
 			</form>
-        </div>
+
+			
+    	</div>
+
     </body>
 </html>
 
