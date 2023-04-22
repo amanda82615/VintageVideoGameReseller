@@ -12,7 +12,7 @@
                 font-family: open sans;
                 overflow: auto;
             }
-        
+
             .sidenav {
                 height: 100%;
                 width: 200px;
@@ -58,6 +58,7 @@
         </style>
     </head>
     <body>
+
         <div class="sidenav">
             <p style="color:white; font-size:30px; padding: 6px 8px 6px 16px; text-align: center;">Sell your items here</p>
             <a href="home.php">Home</a> <br>
@@ -68,8 +69,81 @@
         
         <div class="main">
             <h2>Vintage Video Game Seller</h2>
+            
+            <?php
+				//include information required to access database
+				require 'authentication.php'; 
+
+				//start a session 
+				session_start();
+
+				//still logged in?
+				if (!isset($_SESSION['db_is_logged_in'])
+					|| $_SESSION['db_is_logged_in'] != true) {
+					//not logged in, move to login page
+					header('Location: login.php');
+					exit;
+				} else {
+
+					//logged in 
+					// Connect database server
+					$conn = new mysqli($server, $sqlUsername, $sqlPassword, $databaseName);
+
+                    if (isset($_POST['ItemName']) && isset($_POST['Brand']) && isset($_POST['price']) && isset($_POST['category'])  && isset($_POST['state'])) {
+                        $uid = $_SESSION['UserName'];
+                        $itemname = $_POST['ItemName'];
+                        $brand = $_POST['Brand'];
+                        $price = $_POST['price'];
+                        $category = $_POST['category'];
+                        $condition = $_POST['state'];
+    
+                        $sql = "INSERT INTO ITEM (ItemID, SellerID, ItemName, Brand, Category, State, Price, Status) VALUES (NULL, 1042, $itemname, $brand, $category, $condiion,  $price, 'Available')";
+                        $query_result = $conn->query($sql);
+                        if (!$query_result) {
+                            echo "Query is wrong: $sql";
+                            die;
+                        }
+                    }
+
+
+                    // Prepare query
+					$uid = $_SESSION['UserName'];
+                    $sql = "SELECT i.ItemId, i.ItemName, i.Price, i.Status FROM ITEM as i, USER as u WHERE i.SellerId=u.UserId AND u.UserName='$uid'";
+					
+                    $query_result = $conn->query($sql);
+					if (!$query_result) {
+						echo "Query is wrong: $sql";
+						die;
+					}
+                    echo "<h4>Your Current Listings:</h4>";
+
+					// Output query results: HTML table
+					echo "<table border=1>";
+					echo "<tr>";
+						
+					// fetch attribute names
+					while ($fieldMetadata = $query_result->fetch_field()) {
+						echo "<th>".$fieldMetadata->name."</th>";
+							}
+					echo "</tr>";
+						
+					// fetch table records
+					while ($line = $query_result->fetch_assoc()) {
+						echo "<tr>\n";
+						foreach ($line as $cell) {
+							echo "<td> $cell </td>";
+						}
+						echo "</tr>\n";
+					}
+					echo "</table>";
+
+                    $conn->close();
+				}
+			?>
+
+
             <p>New lisitng information</p>
-            <form action="create_listing.php">
+            <form action="create_listing.php" method="post" name="newListing" id="newListing">
                 <label for="ItemName">Item name</label><br>
                 <input type="text" id="ItemName" name="ItemName"><br>
                 <label for="Brand">Brand</label><br>
@@ -94,8 +168,14 @@
                   <option value="Used">Used</option>
                 </select><br><br>
                 <input type="submit" value="Submit">
-              </form>
-            
+            </form>
+              
 
+
+
+
+        </div>
+
+        
     </body>
 </html>
