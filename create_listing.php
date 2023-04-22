@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-    <title>Sell Sell Sell</title>
+    <title>New Listing</title>
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
         <style>
@@ -12,7 +12,7 @@
                 font-family: open sans;
                 overflow: auto;
             }
-
+        
             .sidenav {
                 height: 100%;
                 width: 200px;
@@ -50,6 +50,21 @@
                 border-radius: 25px;
                 overflow: auto;
             }
+            .column {
+                float: left;
+                width: 30%;
+                padding: 10px;
+                height: 150px;
+                margin: 5px;
+                background-color: #d1d1d1;
+            }
+            .column a{
+               text-decoration: none;
+               color: #000000; 
+            }
+            .column a:hover {
+                color: #0D00FF;
+            }
             .row:after {
                 content: "";
                 display: table;
@@ -58,9 +73,8 @@
         </style>
     </head>
     <body>
-
         <div class="sidenav">
-            <p style="color:white; font-size:30px; padding: 6px 8px 6px 16px; text-align: center;">Sell your items here</p>
+            <p style="color:white; font-size:30px; padding: 6px 8px 6px 16px;">Sell Sell Sell!</p>
             <a href="home.php">Home</a> <br>
             <a href="search.php">Buy</a> <br>
             <a href="create_listing.php">Sell</a> <br>
@@ -68,9 +82,8 @@
         </div>
         
         <div class="main">
-            <h2>Vintage Video Game Seller</h2>
-            
-            <?php
+        <h2>Vintage Video Game Reseller</h2>
+			<?php
 				//include information required to access database
 				require 'authentication.php'; 
 
@@ -89,33 +102,38 @@
 					// Connect database server
 					$conn = new mysqli($server, $sqlUsername, $sqlPassword, $databaseName);
 
-                    if (isset($_POST['ItemName']) && isset($_POST['Brand']) && isset($_POST['price']) && isset($_POST['category'])  && isset($_POST['state'])) {
-                        $uid = $_SESSION['UserName'];
-                        $itemname = $_POST['ItemName'];
-                        $brand = $_POST['Brand'];
-                        $price = $_POST['price'];
-                        $category = $_POST['category'];
-                        $condition = $_POST['state'];
-    
-                        $sql = "INSERT INTO ITEM (ItemID, SellerID, ItemName, Brand, Category, State, Price, Status) VALUES (NULL, 1042, $itemname, $brand, $category, $condiion,  $price, 'Available')";
-                        $query_result = $conn->query($sql);
-                        if (!$query_result) {
-                            echo "Query is wrong: $sql";
-                            die;
-                        }
-                    }
+					if (isset($_POST['ItemName']) || isset($_POST['Brand']) || isset($_POST['Price']) || isset($_POST['Category']) || isset($_POST['Condition'])) {
+						$newItem = $_POST['ItemName'];
+						$newBrand = $_POST['Brand'];
+						$newPrice = floatval($_POST['Price']);
+                        $newCategory = $_POST['Category'];
+                        $newCondition = $_POST['Condition'];
+                        $newStatus = "Available";
+					}
 
-
-                    // Prepare query
+					// Prepare query
+					$table = "ITEM";
+                    $userTable = "USER";
 					$uid = $_SESSION['UserName'];
-                    $sql = "SELECT i.ItemId, i.ItemName, i.Price, i.Status FROM ITEM as i, USER as u WHERE i.SellerId=u.UserId AND u.UserName='$uid'";
-					
-                    $query_result = $conn->query($sql);
+
+					if ($newItem != "" && $newBrand != "" && $newCategory != "" && $newCondition != "") {
+						$sql = "INSERT INTO $table VALUES (NULL, (SELECT DISTINCT UserId FROM $userTable WHERE UserName ='$uid'), 
+                            '$newItem',  '$newBrand', '$newCategory', '$newCondition', $newPrice, '$newStatus')";
+						$query_result = $conn->query($sql);
+						if (!$query_result) {
+							echo "Could not execute query: $sql";
+							die;
+						}
+					}
+
+					$sql = "SELECT i.ItemId, i.ItemName, i.Price, i.Status FROM ITEM as i, USER as u WHERE i.SellerId=u.UserId AND u.UserName='$uid'";
+					$query_result = $conn->query($sql);
 					if (!$query_result) {
 						echo "Query is wrong: $sql";
 						die;
 					}
-                    echo "<h4>Your Current Listings:</h4>";
+
+					echo "<h4>Your Current Listings:</h4>";
 
 					// Output query results: HTML table
 					echo "<table border=1>";
@@ -136,46 +154,60 @@
 						echo "</tr>\n";
 					}
 					echo "</table>";
-
-                    $conn->close();
+					
+					// close the connection
+					$conn->close();
 				}
 			?>
+			<h3>Create your listing:</h3>
+			<form action="create_listing.php" method="post" name="newListing" id="newListing">
+				<table width="300" border="1" align="left" cellpadding="2" cellspacing="2">
+					<tr>
+					<tr>
+					<td width="150">Item Name</td>
+					<td><input name="ItemName" type="text" id="ItemName"></td>
+					</tr>
+					<tr>
 
-
-            <p>New lisitng information</p>
-            <form action="create_listing.php" method="post" name="newListing" id="newListing">
-                <label for="ItemName">Item name</label><br>
-                <input type="text" id="ItemName" name="ItemName"><br>
-                <label for="Brand">Brand</label><br>
-                <input type="text" id="Brand" name="Brand"><br>
-                <label for="price">Price</label><br>
-                <input type="text" id="price" name="price"><br>
-                <label for="category">Choose a category:</label>
-                <select id="category" name="category">
-                  <option value="games">Games</option>
-                  <option value="consolses">Consoles</option>
-                  <option value="accessories">Accessories</option>
-                  <option value="other">Other</option>
-                </select><br><br>
-                <label for="state">Choose the condition:</label>
-                <select id="state" name="state">
-                  <option value="Excellent">Excellent</option>
-                  <option value="Near Mint">Near Mint</option>
-                  <option value="Like New">Like New</option>
-                  <option value="Good">Good</option>
-                  <option value="Fair">Fair</option>
-                  <option value="Some Wear and Tear">Some Wear and Tear</option>
-                  <option value="Used">Used</option>
-                </select><br><br>
-                <input type="submit" value="Submit">
-            </form>
-              
-
-
-
-
+					<tr>
+					<td width="150">Brand</td>
+					<td><input name="Brand" type="text" id="Brand"></td>
+					</tr>
+					<tr>
+					<tr>
+					<td width="150">Price</td>
+					<td><input name="Price" type="text" id="Price"></td>
+					</tr>
+                    <tr>
+					<tr>
+					<td width="150">Category</td>
+					<td><select id="Category" name="Category">
+                        <option value="games">Games</option>
+                        <option value="consolses">Consoles</option>
+                        <option value="accessories">Accessories</option>
+                        <option value="other">Other</option>
+                        </select></td>
+					</tr>
+                    <tr>
+					<tr>
+					<td width="150">Condition</td>
+					<td><select id="Condition" name="Condition">
+                        <option value="Excellent">Excellent</option>
+                        <option value="Near Mint">Near Mint</option>
+                        <option value="Like New">Like New</option>
+                        <option value="Good">Good</option>
+                        <option value="Fair">Fair</option>
+                        <option value="Some Wear and Tear">Some Wear and Tear</option>
+                        <option value="Used">Used</option>
+                        </select></td>
+					</tr>
+					<tr>
+					<td width="150">&nbsp;</td>
+					<td><input name="btnLogin" type="submit" id="btnLogin" value="List"></td>
+					</tr>
+				</table>
+			</form>
         </div>
-
-        
     </body>
 </html>
+
