@@ -56,7 +56,7 @@
                 padding: 10px;
                 height: 150px;
                 margin: 5px;
-                background-color: #d1d1d1;
+                background-color: white;
             }
             .column a{
                text-decoration: none;
@@ -95,40 +95,41 @@
         
         <div class="main">
             <h2>Vintage Video Game Reseller</h2>
-            <h3>Browse By Category</h3>
+            
 			<form action="search.php" method="post">
+                <h3>Browse By Category</h3>
                 <div class="row">
                     <div class="column">
-					<input type="submit" class= "button1" name = "category" value="Games">
+					<input type="submit" class= "button1" name= "Category" value="Games">
 					<img src="Images/gamesicon.png" alt="game icon" style="width:100px">
                     </div>
                     <div class="column">
-                    <input type="submit" class= "button1" name = "category" value="Consoles">
+                    <input type="submit" class= "button1" name= "Category" value="Consoles">
 					<img src="Images/consoleicon.png" alt="consoles icon" style="width:100px">
                     </div>
                     <div class="column">
-					<input type="submit" class= "button1" name = "category" value="Accessories">
+					<input type="submit" class= "button1" name= "Category" value="Accessories">
 					<img src="Images/accessoriesicon.png" alt="accessories icon" style="width:100px">
                     </div>
                 </div>
-            <h3>Browse By Brand</h3>
+                <h3>Browse By Brand</h3>
                 <div class="row">
                     <div class="column">
-                    <input type="submit" class= "button1" name = "description" value="Nintendo">
+                    <input type="submit" class= "button1" name= "Brand" value="Nintendo">
 					<img src="Images/nintendoicon.png" alt="nintendo icon" style="width:150px">
                     </div>
                     <div class="column">
-                    <input type="submit" class= "button1" name = "description" value="Atari">
+                    <input type="submit" class= "button1" name= "Brand" value="Atari">
 					<img src="Images/atariicon.png" alt="atari icon" style="width:150px">
                     </div>
                     <div class="column">
-                    <input type="submit" class= "button1" name = "description" value="Sega">
+                    <input type="submit" class= "button1" name= "Brand" value="Sega">
 					<img src="Images/segaicon.png" alt="sega icon" style="width:150px">
                     </div>
                 </div>
-				</form>
+			</form>
             <h3>Recent Listings</h3>
-                <div class="row"; style="width: auto; height: 325px; background-color: #d1d1d1;" >
+                <div class="row"; style="width: auto; height: 325px; background-color: white;" >
 				<?php
 					$server = "localhost";
 					$sqlUsername = "group9";
@@ -140,7 +141,7 @@
 					}
 					echo "<table class=\"table2\">";
 					echo "<tr>";
-					$sql = "SELECT ItemName, Category, State, Price, Status FROM ITEM WHERE Status = 'Available' ORDER BY ItemId DESC LIMIT 10";
+					$sql = "SELECT i.ItemName as 'Item', i.Brand, i.Category, i.State AS 'Condition', i.Price, i.Status, u.UserName as 'Sold By' FROM ITEM as i JOIN USER AS u ON i.SellerId = u.UserId WHERE i.Status = 'Available' ORDER BY i.ItemId DESC LIMIT 10";
 					$result = $conn->query($sql);
 					while ($fieldMetadata = $result->fetch_field() ) {
 						echo "<th>".$fieldMetadata->name."</th>";
@@ -157,7 +158,6 @@
 					echo "</table>";
 					$results->free();	
 					$conn->close();
-
 				?>
 				</div>
 			</div>
