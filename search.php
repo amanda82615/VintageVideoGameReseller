@@ -208,24 +208,30 @@
                     }
                     $sql = "SELECT i.ItemId AS 'ID', i.ItemName as 'Item Name', i.Brand, i.Category, i.State AS 'Condition', i.Price, i.Status, u.UserName AS 'Sold By' FROM ITEM AS i JOIN USER as u ON i.SellerId=u.UserId WHERE i.ItemName LIKE '%$itemname%' AND i.Brand LIKE '%$brand%' AND i.Category LIKE '%$category%' AND i.State LIKE '%$condition%' AND u.UserName LIKE '%$seller%' AND i.Status = 'Available'";
 
-                    // fetch table rows from mysql db
-                    echo "<table class=\"table1\">";
-					echo "<tr>";
-					$result = $conn->query($sql);
-					while ($fieldMetadata = $result->fetch_field() ) {
-						echo "<th>".$fieldMetadata->name."</th>";
-					}
-					echo "</tr>";
-					// fetch rows in the table
-					while( $row = $result->fetch_assoc() ) {
-						echo "<tr>\n";
-						foreach ($row as $cell) {
-							echo "<td> $cell </td>";
-						}
-						echo "</tr>\n";
-					}
-					echo "</table>";
-					$results->free();	
+                    $result = $conn->query($sql);
+                    if ($result->num_rows > 0){
+                        // fetch table rows from mysql db
+                        echo "<table class=\"table1\">";
+                        echo "<tr>";
+                        
+                        while ($fieldMetadata = $result->fetch_field() ) {
+                            echo "<th>".$fieldMetadata->name."</th>";
+                        }
+                        echo "</tr>";
+                        // fetch rows in the table
+                        while( $row = $result->fetch_assoc() ) {
+                            echo "<tr>\n";
+                            foreach ($row as $cell) {
+                                echo "<td> $cell </td>";
+                            }
+                            echo "</tr>\n";
+                        }
+                        echo "</table>";
+                        $results->free();	
+                    }
+                    else {
+                        echo "<h4>I'm sorry, no results were found. Try another search!</h4>";
+                    }	
 					$conn->close();
 				?>
 				</div>

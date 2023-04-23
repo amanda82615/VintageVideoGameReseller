@@ -166,8 +166,6 @@
 						}
 					}
 
-					
-
 					$sql = "SELECT i.ItemId AS 'ID', i.ItemName AS 'Name', i.Brand, i.Category, i.State AS 'Condition', i.Price, i.Status FROM ITEM as i, USER as u WHERE i.SellerId=u.UserId AND u.UserName='$uid'";
 					$query_result = $conn->query($sql);
 					if (!$query_result) {
@@ -176,26 +174,31 @@
 					}
 
 					echo "<h4>Your Current Listings:</h4>";
-
-					// Output query results: HTML table
-					echo "<table class=\"table1\">";
-					echo "<tr>";
-						
-					// fetch attribute names
-					while ($fieldMetadata = $query_result->fetch_field()) {
-						echo "<th>".$fieldMetadata->name."</th>";
-							}
-					echo "</tr>";
-						
-					// fetch table records
-					while ($line = $query_result->fetch_assoc()) {
-						echo "<tr>\n";
-						foreach ($line as $cell) {
-							echo "<td> $cell </td>";
-						}
-						echo "</tr>\n";
-					}
-					echo "</table>";
+                    
+	                if ($query_result->num_rows > 0){
+                        // Output query results: HTML table
+                        echo "<table class=\"table1\">";
+                        echo "<tr>";
+                            
+                        // fetch attribute names
+                        while ($fieldMetadata = $query_result->fetch_field()) {
+                            echo "<th>".$fieldMetadata->name."</th>";
+                                }
+                        echo "</tr>";
+                            
+                        // fetch table records
+                        while ($line = $query_result->fetch_assoc()) {
+                            echo "<tr>\n";
+                            foreach ($line as $cell) {
+                                echo "<td> $cell </td>";
+                            }
+                            echo "</tr>\n";
+                        }
+                        echo "</table>";
+                    }
+                    else {
+                        echo "<h4>You do not have any listings available.</h4>";
+                    }
 					
 					// close the connection
 					$conn->close();

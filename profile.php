@@ -202,25 +202,30 @@
 
 					echo "<h4>Your Current Listings:</h4>";
 
-					// Output query results: HTML table
-					echo "<table class=\"table1\">";
-					echo "<tr>";
-						
-					// fetch attribute names
-					while ($fieldMetadata = $query_result->fetch_field()) {
-						echo "<th>".$fieldMetadata->name."</th>";
+					if ($query_result->num_rows > 0){
+						// Output query results: HTML table
+						echo "<table class=\"table1\">";
+						echo "<tr>";
+							
+						// fetch attribute names
+						while ($fieldMetadata = $query_result->fetch_field()) {
+							echo "<th>".$fieldMetadata->name."</th>";
+								}
+						echo "</tr>";
+							
+						// fetch table records
+						while ($line = $query_result->fetch_assoc()) {
+							echo "<tr>\n";
+							foreach ($line as $cell) {
+								echo "<td> $cell </td>";
 							}
-					echo "</tr>";
-						
-					// fetch table records
-					while ($line = $query_result->fetch_assoc()) {
-						echo "<tr>\n";
-						foreach ($line as $cell) {
-							echo "<td> $cell </td>";
+							echo "</tr>\n";
 						}
-						echo "</tr>\n";
+						echo "</table>";
 					}
-					echo "</table>";
+					else {
+						echo "<h4>You do not have any listings available.</h4>";
+					}
 
 
 					$sql = "SELECT t.SaleDate, i.ItemName, i.Category, i.State, t.Total, u.UserName AS PurchasedFrom
@@ -239,25 +244,32 @@
 
 					echo "<h4>Your Purchase History:</h4>";
 
-					// Output query results: HTML table
-					echo "<table class=\"table1\">";
-					echo "<tr>";
+					if ($query_result->num_rows > 0){
 						
-					// fetch attribute names
-					while ($fieldMetadata = $query_result->fetch_field()) {
-						echo "<th>".$fieldMetadata->name."</th>";
+
+						// Output query results: HTML table
+						echo "<table class=\"table1\">";
+						echo "<tr>";
+							
+						// fetch attribute names
+						while ($fieldMetadata = $query_result->fetch_field()) {
+							echo "<th>".$fieldMetadata->name."</th>";
+								}
+						echo "</tr>";
+							
+						// fetch table records
+						while ($line = $query_result->fetch_assoc()) {
+							echo "<tr>\n";
+							foreach ($line as $cell) {
+								echo "<td> $cell </td>";
 							}
-					echo "</tr>";
-						
-					// fetch table records
-					while ($line = $query_result->fetch_assoc()) {
-						echo "<tr>\n";
-						foreach ($line as $cell) {
-							echo "<td> $cell </td>";
+							echo "</tr>\n";
 						}
-						echo "</tr>\n";
+						echo "</table>";
 					}
-					echo "</table>";
+					else {
+						echo "<h4>You have not made any purchases.</h4>";
+					}
 					
 					// close the connection
 					$conn->close();
