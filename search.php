@@ -110,6 +110,21 @@
                 font-size: 16px;
                 margin: 4px 2px;
             }
+            .table1 {
+                border: 1px solid black;
+                border-collapse: collapse;
+                width: 100%;
+                background-color: #d1d1d1;
+            }
+            th, td {
+                border: 1px solid black;
+            }
+            h2 {
+                text-align: center;
+                background: #62a8b0;
+                width: auto;
+                color: white;
+            }
         </style>
     </head>
     <body>
@@ -123,11 +138,10 @@
         
         <div class="main">
             <h2>Vintage Video Game Reseller</h2>
-            <br><br>
-            <p><h3>Search through all listings here</h3></p>
             <br>
+            <p><h3>Search through all listings here</h3></p>
             <form action="search.php" style="margin:left;max-width:500px" method="post">
-                <table>
+                <table class= "table1">
                     <tr>
                         <td>Item Name</td>
                         <td>Brand</td>
@@ -145,11 +159,11 @@
                     </tr>       
             </table>
             </form>
-            <br><br><br>
+            <br>
 
         
             <h3>Search Results:</h3>
-                <div class="row"; style="width: auto; height: 325px; background-color: #d1d1d1;" >
+                <div class="row"; style="width: auto; height: auto;" >
 				<?php
 					$server = "localhost";
 					$sqlUsername = "group9";
@@ -191,10 +205,10 @@
                     else {
                         $seller = "";
                     }
-                    $sql = "SELECT i.ItemName as 'Item Name', i.Brand, i.Category, i.State AS 'Condition', i.Price, i.Status, u.UserName AS 'Sold By' FROM ITEM AS i JOIN USER as u ON i.SellerId=u.UserId WHERE i.ItemName LIKE '%$itemname%' AND i.Brand LIKE '%$brand%' AND i.Category LIKE '%$category%' AND i.State LIKE '%$condition%' AND u.UserName LIKE '%$seller%' AND i.Status = 'Available'";
+                    $sql = "SELECT i.ItemId AS 'ID', i.ItemName as 'Item Name', i.Brand, i.Category, i.State AS 'Condition', i.Price, i.Status, u.UserName AS 'Sold By' FROM ITEM AS i JOIN USER as u ON i.SellerId=u.UserId WHERE i.ItemName LIKE '%$itemname%' AND i.Brand LIKE '%$brand%' AND i.Category LIKE '%$category%' AND i.State LIKE '%$condition%' AND u.UserName LIKE '%$seller%' AND i.Status = 'Available'";
 
                     // fetch table rows from mysql db
-                    echo "<table class=\"table2\">";
+                    echo "<table class=\"table1\">";
 					echo "<tr>";
 					$result = $conn->query($sql);
 					while ($fieldMetadata = $result->fetch_field() ) {

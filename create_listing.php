@@ -70,13 +70,53 @@
                 display: table;
                 clear: both;
             }
+            .button1 {
+                border: none;
+                color: white;
+                background-color: #62a8b0;
+                padding: 15px 32px;
+                text-align: left;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+            }
+            .search {
+                border: 5px;
+                border-color: Black;
+                color: Black;
+                background-color: White;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+            }
+            .table1 {
+                border: 1px solid black;
+                border-collapse: collapse;
+                width: 100%;
+                background-color: #d1d1d1;
+            }
+            th, td {
+                border: 1px solid black;
+            }
+            h2 {
+                text-align: center;
+                background: #62a8b0;
+                width: auto;
+                color: white;
+            }
         </style>
     </head>
     <body>
         <div class="sidenav">
             <p style="color:white; font-size:30px; padding: 6px 8px 6px 16px;">Sell Sell Sell!</p>
             <a href="home.php">Home</a> <br>
-            <a href="search.php">Buy</a> <br>
+            <a href="search.php">Search</a> <br>
+            <a href="purchase.php">Buy</a> <br>
             <a href="create_listing.php">Sell</a> <br>
             <a href="profile.php">Account</a>
         </div>
@@ -128,7 +168,7 @@
 
 					
 
-					$sql = "SELECT i.ItemId, i.ItemName, i.Price, i.Status FROM ITEM as i, USER as u WHERE i.SellerId=u.UserId AND u.UserName='$uid'";
+					$sql = "SELECT i.ItemId AS 'ID', i.ItemName AS 'Name', i.Brand, i.Category, i.State AS 'Condition', i.Price, i.Status FROM ITEM as i, USER as u WHERE i.SellerId=u.UserId AND u.UserName='$uid'";
 					$query_result = $conn->query($sql);
 					if (!$query_result) {
 						echo "Query is wrong: $sql";
@@ -138,7 +178,7 @@
 					echo "<h4>Your Current Listings:</h4>";
 
 					// Output query results: HTML table
-					echo "<table border=1>";
+					echo "<table class=\"table1\">";
 					echo "<tr>";
 						
 					// fetch attribute names
@@ -205,7 +245,7 @@
 					</tr>
 					<tr>
 					<td width="150">&nbsp;</td>
-					<td><input name="btnLogin" type="submit" id="btnLogin" value="List"></td>
+					<td><input name="btnLogin" class="button1" type="submit" id="btnLogin" value="List"></td>
 					</tr>
 				</table>
 			</form>
