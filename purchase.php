@@ -2,11 +2,11 @@
 <?php
     session_start();
 
-    echo $_SESSION['UserName'];
+/*     echo $_SESSION['UserName'];
     echo "<br>";
     echo $_SESSION['ItemId'];
     echo "<br>";
-    echo $_SESSION['Price'];
+    echo $_SESSION['Price']; */
 ?>
 <html>
     <title>New Listing</title>
@@ -85,7 +85,7 @@
         <div class="sidenav">
             <p style="color:white; font-size:30px; padding: 6px 8px 6px 16px;">Buy Buy Buy!</p>
             <a href="home.php">Home</a> <br>
-            <a href="search.php">Search</a> <br>
+            <a href="search.php">Buy</a> <br>
             <a href="create_listing.php">Sell</a> <br>
             <a href="profile.php">Account</a>
         </div>
