@@ -116,7 +116,6 @@
             <p style="color:white; font-size:30px; padding: 6px 8px 6px 16px;">Welcome!</p>
             <a href="home.php">Home</a> <br>
             <a href="search.php">Search</a> <br>
-            <a href="purchase.php">Buy</a> <br>
             <a href="create_listing.php">Sell</a> <br>
             <a href="profile.php">Account</a>
         </div>

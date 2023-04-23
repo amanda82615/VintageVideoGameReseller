@@ -132,7 +132,6 @@
         <p style="color:white; font-size:30px; padding: 6px 8px 6px 16px; text-align: center;">Buy something new to you!</p>
             <a href="home.php">Home</a> <br>
             <a href="search.php">Search</a> <br>
-            <a href="purchase.php">Buy</a> <br>
             <a href="create_listing.php">Sell</a> <br>
             <a href="profile.php">Account</a>
         </div>
@@ -162,14 +161,14 @@
             </form>
             <br>
 
-            <!-- Input ItemId form -->
+            <p><h3>View an item here</h3></p>
             <form action="listing.php" style="margin:left;max-width:500px" method="post">
                 <table class= "table1">
                     <tr>
                         <td>Item ID</td>
                     </tr>
                     <tr>
-                        <td><input type="text" class = "search" placeholder="Search..." name="ItemId"></td>
+                        <td><input type="text" class = "search" placeholder="View Item..." name="ItemId"></td>
                         <td><input type="submit" class= "button1" name= "Submit"></td>
                     </tr>
                 </table>

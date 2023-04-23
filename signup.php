@@ -165,9 +165,9 @@
 		
 		<div class="sidenav">
             <p style="color:white; font-size:30px; padding: 6px 8px 6px 16px;">Welcome! Let's sign you up!</p>
+            <a href="login.php">Login</a> <br>
             <a href="home.php">Home</a> <br>
             <a href="search.php">Search</a> <br>
-            <a href="purchase.php">Buy</a> <br>
             <a href="create_listing.php">Sell</a> <br>
             <a href="profile.php">Account</a>
         </div>
