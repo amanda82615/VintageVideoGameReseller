@@ -167,7 +167,14 @@
 						echo "</tr>\n";
 					}
 					echo "</table>";
-					$results->free();	
+                    $sql = "SELECT Price FROM ITEM WHERE ItemId='$ItemId'";
+                    $result = $conn->query($sql);
+                    while ($row = $result->fetch_assoc()) {
+                        foreach ($row as $cell) {
+                            $value = $cell;
+                        }
+                    }
+                    $_SESSION['Price'] = $value;
 					$conn->close();
 				?>
 				</div>

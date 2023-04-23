@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <?php
     session_start();
@@ -107,63 +108,28 @@
 					//logged in 
 					// Connect database server
 					$conn = new mysqli($server, $sqlUsername, $sqlPassword, $databaseName);
-
-					if (isset($_POST['Address']) || isset($_POST['City']) || isset($_POST['State']) || isset($_POST['Zip'])) {
-						$address = $_POST['Address'];
-						$city = $_POST['City'];
-						$state = $_POST['State'];
-                        $zip = $_POST['Zip'];
-                        $itemId = $_SESSION['ItemId'];
-                        $UserName = $_SESSION['UserName'];
-                        $price = floatval($_SESSION['Price']);
-                        $tax = $price * 0.15;
-                        $total = $price + $tax;
-
-                        $sql = "INSERT INTO TRANSACTION VALUES (NULL, $itemId, (SELECT UserId FROM USER WHERE UserName='$UserName'), now(), $price, $tax, $total, '$address', '$city', '$state', '$zip')";
-                        $query_result = $conn->query($sql);
-                        if (!$query_result) {
-                            echo "Problem with query: $sql";
-                            die;
-                        }
+                    $itemId=$_SESSION['ItemId'];
+                    echo "<h3>Your Purchase Information:</h3>";
+                    echo "<table class=\"table2\">";
+                    $sql = "SELECT * FROM TRANSACTION where ItemId=$itemId";
+                    $result = $conn->query($sql);
+                    while ($fieldMetadata = $result->fetch_field() ) {
+                        echo "<th>".$fieldMetadata->name."</th>";
                     }
-					// close the connection
-					$conn->close();
-				}
-			?>
-			<h3>Enter Your Information:</h3>
-			<form action="complete_purchase.php" method="post" name="newTransaction" id="newTransaction">
-				<table width="300" border="1" align="left" cellpadding="2" cellspacing="2">
-					<tr>
-					<tr>
-					<td width="150">Address</td>
-					<td><input name="Address" type="text" id="Address"></td>
-					</tr>
-					<tr>
+                    echo "</tr>";
+                    // fetch rows in the table
+                    while( $row = $result->fetch_assoc() ) {
+                        echo "<tr>\n";
+                        foreach ($row as $cell) {
+                            echo "<td> $cell </td>";
+                        }
+                        echo "</tr>\n";
+                    }
+                    echo "</table>";
+                }
+            $conn->close();
+            ?>
 
-					<tr>
-					<td width="150">City</td>
-					<td><input name="City" type="text" id="City"></td>
-					</tr>
-					<tr>
-					<tr>
-					<td width="150">State</td>
-					<td><input name="State" type="text" id="State"></td>
-					</tr>
-					<tr>
-					<td width="150">Zip</td>
-					<td><input name="Zip" type="text" id="Zip"></td>
-					</tr>
-					<tr>
-                    <tr>
-					<tr>
-					<td width="150">&nbsp;</td>
-					<td><input name="btnLogin" type="submit" id="btnLogin" value="Complete Your Purchase"></td>
-					</tr>
-				</table>
-			</form>
-
-			
-    	</div>
 
     </body>
 </html>
