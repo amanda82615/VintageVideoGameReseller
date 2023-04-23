@@ -142,6 +142,7 @@
 					// Connect database server
 					$conn = new mysqli($server, $sqlUsername, $sqlPassword, $databaseName);
 
+                    // Create New Listing
 					if (isset($_POST['ItemName']) || isset($_POST['Brand']) || isset($_POST['Price']) || isset($_POST['Category']) || isset($_POST['Condition'])) {
 						$newItem = $_POST['ItemName'];
 						$newBrand = $_POST['Brand'];
@@ -150,12 +151,10 @@
                         $newCondition = $_POST['Condition'];
                         $newStatus = "Available";
 					}
-
 					// Prepare query
 					$table = "ITEM";
                     $userTable = "USER";
 					$uid = $_SESSION['UserName'];
-
 					if ($newItem != "" && $newBrand != "" && $newCategory != "" && $newCondition != "") {
 						$sql = "INSERT INTO $table VALUES (NULL, (SELECT DISTINCT UserId FROM $userTable WHERE UserName ='$uid'), 
                             '$newItem',  '$newBrand', '$newCategory', '$newCondition', $newPrice, '$newStatus')";
@@ -166,6 +165,73 @@
 						}
 					}
 
+                    // Modify Listing
+                    if (isset($_POST['updateItemId']) || isset($_POST['updateItemName']) || isset($_POST['updateBrand']) || isset($_POST['updatePrice']) || isset($_POST['updateCategory']) || isset($_POST['updateCondition'])) {
+                        $updateItemId = $_POST['updateItemId'];
+                        $updateItemName = $_POST['updateItemName'];
+                        $updateBrand = $_POST['updateBrand'];
+                        $updatePrice = floatval($_POST['updatePrice']);
+                        $updateCategory = $_POST['updateCategory'];
+                        $updateCondition = $_POST['updateCondition'];
+                        $updateStatus = "Available";
+                        // Prepare query
+                        $table = "ITEM";
+                        $userTable = "USER";
+                        $uid = $_SESSION['UserName'];
+                        //Check if ItemId is in user's inventory
+                        $sql = "SELECT i.ItemId FROM ITEM as i, USER as u WHERE i.SellerId=u.UserId AND u.UserName='$uid' AND i.ItemId=$updateItemId";
+                        $query_result = $conn->query($sql);
+                        if (!$query_result) {
+                            echo "Could not execute query: $sql";
+                            die;
+                        }
+                        if ($query_result->num_rows == 1) {
+                            if ($updateItemId != "" && $updateItemName != "" && $updateBrand != "" && $updateCategory != "" && $updateCondition != "") {
+                                $sql = "UPDATE $table SET ItemName='$updateItemName', Brand='$updateBrand', Category='$updateCategory', State='$updateCondition', Price=$updatePrice, Status='$updateStatus' WHERE ItemId=$updateItemId";
+                                $query_result = $conn->query($sql);
+                                if (!$query_result) {
+                                    echo "Could not execute query: $sql";
+                                    die;
+                                }
+                            }
+                        }
+                        else {
+                            echo "Item ID does not exist in your inventory";
+                            
+                        }
+                    }
+
+                    // Delete Listing
+                    if (isset($_POST['deleteItemId'])) {
+                        $deleteItemId = $_POST['deleteItemId'];
+                        // Prepare query
+                        $table = "ITEM";
+                        $userTable = "USER";
+                        $uid = $_SESSION['UserName'];
+                        //Check if ItemId is in user's inventory
+                        $sql = "SELECT i.ItemId FROM ITEM as i, USER as u WHERE i.SellerId=u.UserId AND u.UserName='$uid' AND i.ItemId=$deleteItemId";
+                        $query_result = $conn->query($sql);
+                        if (!$query_result) {
+                            echo "Could not execute query: $sql";
+                            die;
+                        }
+                        if ($query_result->num_rows == 1) {
+                            if ($deleteItemId != "") {
+                                $sql = "DELETE FROM $table WHERE ItemId=$deleteItemId";
+                                $query_result = $conn->query($sql);
+                                if (!$query_result) {
+                                    echo "Could not execute query: $sql";
+                                    die;
+                                }
+                            }
+                        }
+                        else {
+                            echo "Item ID does not exist in your inventory";
+                        }
+                    }
+                    
+
+                    // Prepare query for displaying current listings
 					$sql = "SELECT i.ItemId AS 'ID', i.ItemName AS 'Name', i.Brand, i.Category, i.State AS 'Condition', i.Price, i.Status FROM ITEM as i, USER as u WHERE i.SellerId=u.UserId AND u.UserName='$uid'";
 					$query_result = $conn->query($sql);
 					if (!$query_result) {
@@ -204,7 +270,7 @@
 					$conn->close();
 				}
 			?>
-			<h3>Create your listing:</h3>
+			<h3>Create a listing:</h3>
 			<form action="create_listing.php" method="post" name="newListing" id="newListing">
 				<table width="300" border="1" align="left" cellpadding="2" cellspacing="2">
 					<tr>
@@ -252,8 +318,75 @@
 					</tr>
 				</table>
 			</form>
+            <br><br><br><br><br><br><br><br><br><br>
 
-			
+            <h3>Modify a listing:</h3>
+            <form action="create_listing.php" method="post" name="modifyListing" id="modifyListing">
+                <table width="300" border="1" align="left" cellpadding="2" cellspacing="2">
+                    <tr>
+                    <tr>
+                    <td width="150">Item ID</td>
+                    <td><input name="updateItemId" type="text" id="ItemId"></td>
+                    </tr>
+                    <tr>
+                    <td width="150">Item Name</td>
+                    <td><input name="updateItemName" type="text" id="ItemName"></td>
+                    </tr>
+                    <tr>
+
+                    <tr>
+                    <td width="150">Brand</td>
+                    <td><input name="updateBrand" type="text" id="Brand"></td>
+                    </tr>
+                    <tr>
+                    <tr>
+                    <td width="150">Price</td>
+                    <td><input name="updatePrice" type="text" id="Price"></td>
+                    </tr>
+                    <tr>
+                    <tr>
+                    <td width="150">Category</td>
+                    <td><select id="Category" name="updateCategory">
+                        <option value="Games">Games</option>
+                        <option value="Consoles">Consoles</option>
+                        <option value="Accessories">Accessories</option>
+                        <option value="Other">Other</option>
+                        </select></td>
+                    </tr>
+                    <tr>
+                    <tr>
+                    <td width="150">Condition</td>
+                    <td><select id="Condition" name="updateCondition">
+                        <option value="Excellent">Excellent</option>
+                        <option value="Near Mint">Near Mint</option>
+                        <option value="Like New">Like New</option>
+                        <option value="Good">Good</option>
+                        <option value="Fair">Fair</option>
+                        <option value="Some Wear and Tear">Some Wear and Tear</option>
+                        <option value="Used">Used</option>
+                        </select></td>
+                    </tr>
+                    <tr>
+                    <td width="150">&nbsp;</td>
+                    <td><input name="btnLogin" class="button1" type="submit" id="btnLogin" value="Modify"></td>
+                    </tr>
+                </table>
+            </form>
+            <br><br><br><br><br><br><br><br><br><br><br>
+            <h3>Delete a listing:</h3>
+            <form action="create_listing.php" method="post" name="deleteListing" id="deleteListing">
+                <table width="300" border="1" align="left" cellpadding="2" cellspacing="2">
+                    <tr>
+                    <tr>
+                    <td width="150">Item ID</td>
+                    <td><input name="deleteItemId" type="text" id="ItemId"></td>
+                    </tr>
+                    <tr>
+                    <td width="150">&nbsp;</td>
+                    <td><input name="btnLogin" class="button1" type="submit" id="btnLogin" value="Delete"></td>
+                    </tr>
+                </table>
+            </form>	
     	</div>
 
     </body>
