@@ -70,18 +70,59 @@
                 display: table;
                 clear: both;
             }
+			.button1 {
+                border: none;
+                color: white;
+                background-color: #62a8b0;
+                padding: 15px 32px;
+                text-align: left;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+            }
+            .search {
+                border: 5px;
+                border-color: Black;
+                color: Black;
+                background-color: White;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+            }
+            .table1 {
+                border: 1px solid black;
+                border-collapse: collapse;
+                width: 100%;
+                background-color: #d1d1d1;
+            }
+            th, td {
+                border: 1px solid black;
+            }
+            h2 {
+                text-align: center;
+                background: #62a8b0;
+                width: auto;
+                color: white;
+            }
         </style>
     </head>
     <body>
         <div class="sidenav">
             <p style="color:white; font-size:30px; padding: 6px 8px 6px 16px;">Your Profile</p>
             <a href="home.php">Home</a> <br>
-            <a href="search.php">Buy</a> <br>
+            <a href="search.php">Search</a> <br>
+            <a href="purchase.php">Buy</a> <br>
             <a href="create_listing.php">Sell</a> <br>
             <a href="profile.php">Account</a>
         </div>
         
         <div class="main">
+			<h2>Vintage Video Game Reseller</h2>
 			<?php
 				//include information required to access database
 				require 'authentication.php'; 
@@ -129,7 +170,7 @@
 						die;
 					}
 
-					echo "<h2>Hello, $uid!</h2>";
+					echo "<h3>Hello, $uid!</h3>";
 					echo "<h4>Account Info: </h4>";
 
 					// Output query results: HTML table
@@ -152,7 +193,7 @@
 					}
 					echo "</table>";
 
-					$sql = "SELECT i.ItemId, i.ItemName, i.Price, i.Status FROM ITEM as i, USER as u WHERE i.SellerId=u.UserId AND u.UserName='$uid'";
+					$sql = "SELECT i.ItemId AS 'ID', i.ItemName AS 'Name', i.Brand, i.Category, i.State AS 'Condition', i.Price, i.Status FROM ITEM as i, USER as u WHERE i.SellerId=u.UserId AND u.UserName='$uid'";
 					$query_result = $conn->query($sql);
 					if (!$query_result) {
 						echo "Query is wrong: $sql";
@@ -162,7 +203,44 @@
 					echo "<h4>Your Current Listings:</h4>";
 
 					// Output query results: HTML table
-					echo "<table border=1>";
+					echo "<table class=\"table1\">";
+					echo "<tr>";
+						
+					// fetch attribute names
+					while ($fieldMetadata = $query_result->fetch_field()) {
+						echo "<th>".$fieldMetadata->name."</th>";
+							}
+					echo "</tr>";
+						
+					// fetch table records
+					while ($line = $query_result->fetch_assoc()) {
+						echo "<tr>\n";
+						foreach ($line as $cell) {
+							echo "<td> $cell </td>";
+						}
+						echo "</tr>\n";
+					}
+					echo "</table>";
+
+
+					$sql = "SELECT t.SaleDate, i.ItemName, i.Category, i.State, t.Total, u.UserName AS PurchasedFrom
+					FROM ITEM AS i
+					JOIN TRANSACTION AS t ON t.ItemId = i.ItemId
+					JOIN USER AS u ON u.UserId = i.SellerId
+					JOIN USER AS bu ON bu.UserId = t.PurchaserId
+					WHERE bu.UserName='$uid'
+					ORDER BY t.SaleDate DESC";
+					
+					$query_result = $conn->query($sql);
+					if (!$query_result) {
+						echo "Query is wrong: $sql";
+						die;
+					}
+
+					echo "<h4>Your Purchase History:</h4>";
+
+					// Output query results: HTML table
+					echo "<table class=\"table1\">";
 					echo "<tr>";
 						
 					// fetch attribute names
@@ -185,7 +263,7 @@
 					$conn->close();
 				}
 			?>
-			<h2>Have Something You Want to Sell? List a New Item <a href='create_listing.php'>Here!</a></h2>
+			<h3>Have Something You Want to Sell? List a New Item <a href='create_listing.php'>Here!</a></h3>
 			<h3>Update Your Profile Information:</h3>
 			<form action="profile.php" method="post" name="profileUpdate" id="profileUpdate">
 				<table width="300" border="1" align="left" cellpadding="2" cellspacing="2">

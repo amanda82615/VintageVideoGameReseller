@@ -75,12 +75,39 @@
                 color: white;
                 background-color: #62a8b0;
                 padding: 15px 32px;
-                text-align: center;
+                text-align: left;
                 text-decoration: none;
                 display: inline-block;
                 font-size: 16px;
                 margin: 4px 2px;
                 cursor: pointer;
+            }
+            .search {
+                border: 5px;
+                border-color: Black;
+                color: Black;
+                background-color: White;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+            }
+            .table1 {
+                border: 1px solid black;
+                border-collapse: collapse;
+                width: 100%;
+                background-color: #d1d1d1;
+            }
+            th, td {
+                border: 1px solid black;
+            }
+            h2 {
+                text-align: center;
+                background: #62a8b0;
+                width: auto;
+                color: white;
             }
         </style>
     </head>
@@ -88,7 +115,8 @@
         <div class="sidenav">
             <p style="color:white; font-size:30px; padding: 6px 8px 6px 16px;">Welcome!</p>
             <a href="home.php">Home</a> <br>
-            <a href="search.php">Buy</a> <br>
+            <a href="search.php">Search</a> <br>
+            <a href="purchase.php">Buy</a> <br>
             <a href="create_listing.php">Sell</a> <br>
             <a href="profile.php">Account</a>
         </div>
@@ -128,7 +156,7 @@
                     </div>
                 </div>
 			</form>
-            <h3>Recent Listings</h3>
+            <h3>Most Recent Listings</h3>
                 <div class="row"; style="width: auto; height: 325px; background-color: white;" >
 				<?php
 					$server = "localhost";
@@ -139,7 +167,7 @@
 					if ($conn->connect_error) {
 						die("Connection failed: " . $conn->connect_error);
 					}
-					echo "<table class=\"table2\">";
+					echo "<table class=\"table1\">";
 					echo "<tr>";
 					$sql = "SELECT i.ItemName as 'Item', i.Brand, i.Category, i.State AS 'Condition', i.Price, i.Status, u.UserName as 'Sold By' FROM ITEM as i JOIN USER AS u ON i.SellerId = u.UserId WHERE i.Status = 'Available' ORDER BY i.ItemId DESC LIMIT 10";
 					$result = $conn->query($sql);

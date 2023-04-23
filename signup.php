@@ -124,12 +124,39 @@
                 color: white;
                 background-color: #62a8b0;
                 padding: 15px 32px;
-                text-align: center;
+                text-align: left;
                 text-decoration: none;
                 display: inline-block;
                 font-size: 16px;
                 margin: 4px 2px;
                 cursor: pointer;
+            }
+            .search {
+                border: 5px;
+                border-color: Black;
+                color: Black;
+                background-color: White;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+            }
+            .table1 {
+                border: 1px solid black;
+                border-collapse: collapse;
+                width: 100%;
+                background-color: #d1d1d1;
+            }
+            th, td {
+                border: 1px solid black;
+            }
+            h2 {
+                text-align: center;
+                background: #62a8b0;
+                width: auto;
+                color: white;
             }
         </style>
 	</head>
@@ -139,7 +166,8 @@
 		<div class="sidenav">
             <p style="color:white; font-size:30px; padding: 6px 8px 6px 16px;">Welcome! Let's sign you up!</p>
             <a href="home.php">Home</a> <br>
-            <a href="search.php">Buy</a> <br>
+            <a href="search.php">Search</a> <br>
+            <a href="purchase.php">Buy</a> <br>
             <a href="create_listing.php">Sell</a> <br>
             <a href="profile.php">Account</a>
         </div>
@@ -148,13 +176,13 @@
 		<div class="main">
             <h2>Vintage Video Game Reseller</h2>
 			<form action="" method="post" name="frmLogin" id="frmLogin">
-			<table width="300" border="1" align="center" cellpadding="2" cellspacing="2">
+			<table width="500" border="1" align="center" cellpadding="2" cellspacing="2">
 			<tr>
-			<td width="150">Select Username *</td>
+			<td width="300">Select Username *</td>
 			<td><input name="UserName" type="text" id="UserName"></td>
 			</tr>
 			<tr>
-			<td width="150">Type Password *</td>
+			<td width="300">Type Password *</td>
 			<td><input name="Password" type="password" id="Password"></td>
 			</tr>
 			<tr>
@@ -180,9 +208,11 @@
 			</tr>
 			<tr>
 			<td width="150">&nbsp;</td>
-			<td><input name="btnLogin" type="submit" id="btnLogin" value="Sign In"></td>
+			<td><input name="btnLogin" class=button1 type="submit" id="btnLogin" value="Sign In"></td>
 			</tr>
 			</table>
+
+            
 			</form>
 		</div>
 	</body>
