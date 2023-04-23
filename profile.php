@@ -109,6 +109,9 @@
                 width: auto;
                 color: white;
             }
+			h5 {
+				background: #ffff99;
+			}
         </style>
     </head>
     <body>
@@ -223,7 +226,7 @@
 						echo "</table>";
 					}
 					else {
-						echo "<h4>You do not have any listings available.</h4>";
+						echo "<h5>You do not have any listings available.</h5>";
 					}
 
 
@@ -267,14 +270,14 @@
 						echo "</table>";
 					}
 					else {
-						echo "<h4>You have not made any purchases.</h4>";
+						echo "<h5>You have not made any purchases.</h5>";
 					}
 					
 					// close the connection
 					$conn->close();
 				}
 			?>
-			<h3>Have Something You Want to Sell? List a New Item <a href='create_listing.php'>Here!</a></h3>
+			<h3>Need to change something? Edit your listings <a href='create_listing.php'>here!</a></h3>
 			<h3>Update Your Profile Information:</h3>
 			<form action="profile.php" method="post" name="profileUpdate" id="profileUpdate">
 				<table width="300" border="1" align="left" cellpadding="2" cellspacing="2">
