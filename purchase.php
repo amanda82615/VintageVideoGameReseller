@@ -124,6 +124,8 @@
                         if (!$query_result) {
                             echo "Problem with query: $sql";
                             die;
+                        } else {
+                            echo "Purchase Complete!";
                         }
                     }
 					// close the connection
@@ -131,7 +133,7 @@
 				}
 			?>
 			<h3>Enter Your Information:</h3>
-			<form action="complete_purchase.php" method="post" name="newTransaction" id="newTransaction">
+			<form action="purchase.php" method="post" name="newTransaction" id="newTransaction">
 				<table width="300" border="1" align="left" cellpadding="2" cellspacing="2">
 					<tr>
 					<tr>
