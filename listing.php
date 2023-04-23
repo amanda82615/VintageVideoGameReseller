@@ -183,8 +183,28 @@
                         }
                     }
                     $_SESSION['Price'] = $value;
+
+                    
+
+
+
 					$conn->close();
 				?>
+
+                <h3>Not what you wanted to see? Input a different Item ID below or <a href="search.php">search here</a></h3>
+                <!-- Input ItemId form -->
+                <form action="listing.php" style="margin:left;max-width:500px" method="post">
+                    <table class= "table1">
+                        <tr>
+                            <td>Item ID</td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class = "search" placeholder="Search..." name="ItemId"></td>
+                            <td><input type="submit" class= "button1" name= "Submit"></td>
+                        </tr>
+                    </table>
+                </form>
+
 				</div>
 			</div>
 
