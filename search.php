@@ -162,6 +162,19 @@
             </form>
             <br>
 
+            <!-- Input ItemId form -->
+            <form action="listing.php" style="margin:left;max-width:500px" method="post">
+                <table class= "table1">
+                    <tr>
+                        <td>Item ID</td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" class = "search" placeholder="Search..." name="ItemId"></td>
+                        <td><input type="submit" class= "button1" name= "Submit"></td>
+                    </tr>
+                </table>
+            </form>
+
         
             <h3>Search Results:</h3>
                 <div class="row"; style="width: auto; height: auto;" >

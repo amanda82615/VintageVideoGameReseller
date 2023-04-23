@@ -97,13 +97,20 @@
                 margin: 4px 2px;
                 cursor: pointer;
             }
+            h2 {
+                text-align: center;
+                background: #62a8b0;
+                width: auto;
+                color: white;
+            }
         </style>
     </head>
     <body>
         <div class="sidenav">
             <p style="color:white; font-size:30px; padding: 6px 8px 6px 16px;">Welcome!</p>
             <a href="home.php">Home</a> <br>
-            <a href="search.php">Buy</a> <br>
+            <a href="search.php">Search</a> <br>
+            <a href="purchase.php">Buy</a> <br>
             <a href="create_listing.php">Sell</a> <br>
             <a href="profile.php">Account</a>
         </div>
@@ -123,9 +130,10 @@
 					if ($conn->connect_error) {
 						die("Connection failed: " . $conn->connect_error);
 					}
-                    if (isset($_SESSION['ItemId'])) {
-                        $ItemId = $_SESSION['ItemId'];
-                    } else {
+                    if (!empty($_POST['ItemId'])) {
+                        $ItemId = $_POST['ItemId'];
+                    }
+                    else {
                         $ItemId = 1196;
                     }
                     $_SESSION['ItemId'] = $ItemId;
